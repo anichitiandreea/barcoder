@@ -1,0 +1,72 @@
+.container {
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+  padding: 25px;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  font-family: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+}
+
+.body {
+  background-color: #fafafa;
+  background-image: radial-gradient(#ddd 1px,transparent 0), radial-gradient(#ddd 1px,transparent 0);
+  background-position: 0 0,25px 25px;
+  background-size: 50px 50px;
+}
+
+.header1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: -.029375rem;
+}
+
+.input {
+  cursor: pointer;
+  border: 1px solid #eaeaea;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  min-width: auto;
+  line-height: 0;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+}
+
+.button {
+  cursor: pointer;
+  border: 1px solid #eaeaea;
+  min-width: auto;
+  height: 32px;
+  line-height: 0;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+.longButton {
+  cursor: pointer;
+  border: 1px solid #eaeaea;
+  min-width: auto;
+  height: 32px;
+  line-height: 0;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonText {
+  color: #666;
+  font-size: 16px;
+}
+
+.main {
+  max-width: 1048px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
