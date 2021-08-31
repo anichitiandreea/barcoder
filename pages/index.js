@@ -1,23 +1,8 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Image from 'next/image'
-import { useState } from 'react'
 import Layout from '../components/layout'
 
-function Home({data}) {
-  const [phoneNumber, setPhoneNumber] = useState('')
-
-  const generateCode = async() => {
-    const res = await fetch('http://localhost:5000/PayloadQRCode/phoneNumber?number=' + phoneNumber)
-    const data = await res.json()
-
-    return {
-      props: {
-        data,
-      },
-    }
-  }
-
+function Home() {
   return (
     <Layout>
       <Head>
@@ -27,36 +12,9 @@ function Home({data}) {
       </Head>
 
       <main className={styles.container}>
-        <div>
-          <div className={styles.header1}>Complete phone number here</div>
-          <div>
-            <input id="phone-number" className={styles.input} type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
-          </div>
-          <a className={styles.button}>
-            <span className={styles.buttonText} onClick={generateCode}>Generate</span>
-          </a>
-        </div>
-        <div>
-          <Image src={"data:image/png;base64," + data.fileContents} alt="image" width='310px' height="310px"></Image>
-          <a className={styles.longButton}>
-            <span className={styles.buttonText}>Download</span>
-          </a>
-        </div>
       </main>
     </Layout>
   )
-}
-
-// This function gets called at build time
-export async function getStaticProps() {
-  const res = await fetch('http://localhost:5000/PayloadQRCode/phoneNumber?number=0755348209')
-  const data = await res.json()
-
-  return {
-    props: {
-      data,
-    },
-  }
 }
 
 export default Home

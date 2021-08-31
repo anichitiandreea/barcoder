@@ -32,17 +32,36 @@
   line-height: 0;
   font-size: 0.875rem;
   padding: 6px 12px;
+  outline: none;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input:focus {
+  border-color: #000;
 }
 
 .button {
   cursor: pointer;
-  border: 1px solid #eaeaea;
+  border: 1px solid #971c45;
   min-width: auto;
   height: 32px;
   line-height: 0;
   font-size: 0.875rem;
   padding: 6px 12px;
   border-radius: 5px;
+  background-color: #fc3074;
+  color: #fff;
+}
+
+.button:hover {
+  background-color: #fff;
+  color: #fc3074;
+  border-color: #fc3074;
+}
+
+.generation {
+  flex-basis: 50%;;
 }
 
 .longButton {
@@ -57,11 +76,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #666;
+}
+
+.longButton:hover {
+  border-color: #000;
+  color: #000;
 }
 
 .buttonText {
-  color: #666;
   font-size: 16px;
+}
+
+.description {
+  color: #444;
+  font-size: .875em;
 }
 
 .main {

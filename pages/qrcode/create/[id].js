@@ -4,12 +4,12 @@ import Image from 'next/image'
 import { useState } from 'react'
 import Layout from '../../../components/layout'
 
-function QrCodeCreate({data}) {
-  const [phoneNumber, setPhoneNumber] = useState('')
+function QrCodeCreate({data, params}) {
+  const [processedData, setData] = useState('')
   const [image, setImage] = useState(data.fileContents)
 
   const generateCode = async() => {
-    const res = await fetch('http://localhost:5000/PayloadQRCode/phoneNumber?number=' + phoneNumber)
+    const res = await fetch('http://localhost:5000/PayloadQRCode/' + params.id + '?data=' + processedData)
     const data = await res.json()
 
     setImage(data.fileContents)
@@ -17,6 +17,7 @@ function QrCodeCreate({data}) {
     return {
       props: {
         data,
+        params
       },
     }
   }
@@ -29,12 +30,12 @@ function QrCodeCreate({data}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.header1}>Generate QR Code</div>
         <div className={styles.container}>
-          <div>
-            <div>Complete phone number here</div>
+          <div className={styles.generation}>
+            <div className={styles.header1}>Generate QR Code</div>
+            <div className={styles.description}>Complete phone number here</div>
             <div>
-              <input id="phone-number" className={styles.input} type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+              <input id="phone-number" className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
             <a className={styles.button}>
               <span className={styles.buttonText} onClick={generateCode}>Generate</span>
@@ -53,20 +54,21 @@ function QrCodeCreate({data}) {
 }
 
 // This function gets called at build time
-export async function getStaticProps() {
-  const res = await fetch('http://localhost:5000/PayloadQRCode/phoneNumber?number=')
+export async function getStaticProps({params}) {
+  const res = await fetch('http://localhost:5000/PayloadQRCode/' + params.id + '?data=""')
   const data = await res.json()
 
   return {
     props: {
       data,
+      params
     },
   }
 }
 
 export async function getStaticPaths() {
   const paths = [
-    { params: { id: 'map' } },
+    { params: { id: 'sms' } },
     { params: { id: 'website' } },
     { params: { id: 'number' } }
   ]

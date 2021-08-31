@@ -33,13 +33,13 @@ export default function QRCode() {
               </div>
             </a>
           </Link>
-          <Link href='/qrcode/create/map'>
+          <Link href='/qrcode/create/sms'>
             <a className={styles.gridRow}>
               <div className={styles.innerRow}>
                 <div className={styles.title}>
-                  Google Maps QR Code
+                  SMS QR Code
                 </div>
-                <div className={styles.description}>When scanned, displays location on map</div>
+                <div className={styles.description}>When scanned, displays the message to send to a user</div>
               </div>
             </a>
           </Link>
