@@ -22,6 +22,30 @@ function QrCodeCreate({data, params}) {
     }
   }
 
+  const downloadFile = async () => {
+    let binaryString = window.atob(image);
+    let length = binaryString.length;
+    let bytes = new Uint8Array(length);
+
+    for (var i = 0; i < length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const url = window.URL.createObjectURL(
+      new Blob([bytes.buffer, {type: 'image/png'}]),
+    );
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute(
+      'download',
+      `image.png`,
+    );
+
+    // Start download
+    link.click();
+  };
+
   return (
     <Layout>
       <Head>
@@ -37,14 +61,14 @@ function QrCodeCreate({data, params}) {
             <div>
               <input id="phone-number" className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
-            <a className={styles.button}>
-              <span className={styles.buttonText} onClick={generateCode}>Generate</span>
+            <a className={styles.button} onClick={generateCode}>
+              <span className={styles.buttonText}>Generate</span>
             </a>
           </div>
           <div>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
-            <a className={styles.longButton}>
-              <span className={styles.buttonText}>Download</span>
+            <a className={styles.longButton} onClick={downloadFile}>
+              <span className={styles.buttonText} >Download</span>
             </a>
           </div>
         </div>
