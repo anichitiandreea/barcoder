@@ -1,24 +1,23 @@
 import Head from 'next/head'
-import styles from '../../../styles/Home.module.css'
+import styles from '../../../styles/qrcode-create.module.css'
 import Image from 'next/image'
 import { useState } from 'react'
 import Layout from '../../../components/layout'
 
-function QrCodeCreate({data, params}) {
-  const [processedData, setData] = useState('')
-  const [image, setImage] = useState(data.fileContents)
+export default function PhoneNumberQRCode({data}) {
+  const [processedData, setData] = useState('');
+  const [image, setImage] = useState(data.fileContents);
 
   const generateCode = async() => {
-    const res = await fetch('http://localhost:5000/PayloadQRCode/' + params.id + '?data=' + processedData)
-    const data = await res.json()
+    const response = await fetch('http://localhost:5000/PayloadQRCode/number?data=' + processedData);
+    const data = await response.json()
 
     setImage(data.fileContents)
 
     return {
       props: {
-        data,
-        params
-      },
+        data
+      }
     }
   }
 
@@ -56,11 +55,12 @@ function QrCodeCreate({data, params}) {
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.generation}>
-            <div className={styles.header1}>Generate QR Code</div>
-            <div className={styles.description}>Complete phone number here</div>
+            <div className={styles.header1}>Generate Phone Number QR Code</div>
+            <div className={styles.description}>Pass phone number here:</div>
             <div>
               <input id="phone-number" className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
+            <div className={styles.sample}>(Example: 0744165568)</div>
             <a className={styles.button} onClick={generateCode}>
               <span className={styles.buttonText}>Generate</span>
             </a>
@@ -78,29 +78,13 @@ function QrCodeCreate({data, params}) {
 }
 
 // This function gets called at build time
-export async function getStaticProps({params}) {
-  const res = await fetch('http://localhost:5000/PayloadQRCode/' + params.id + '?data=""')
-  const data = await res.json()
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:5000/PayloadQRCode/number?data=""')
+  const data = await response.json()
 
   return {
     props: {
-      data,
-      params
-    },
+      data
+    }
   }
 }
-
-export async function getStaticPaths() {
-  const paths = [
-    { params: { id: 'sms' } },
-    { params: { id: 'website' } },
-    { params: { id: 'number' } }
-  ]
-
-  return {
-    paths,
-    fallback: true
-  }
-}
-
-export default QrCodeCreate

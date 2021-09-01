@@ -18,6 +18,8 @@
 
 .gridRow:hover {
   box-shadow: 0px 4px 8px rgba(0,0,0,0.12);
+  background-color: #fefcfd;
+  border: 1px solid #fd97b9;
 }
 
 .description {
@@ -27,6 +29,7 @@
 .title {
   font-weight: 600;
   margin-bottom: 10px;
+  font-size: 1.3em;
 }
 
 .container {
