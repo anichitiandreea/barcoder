@@ -45,8 +45,6 @@
   cursor: pointer;
   border: 1px solid #971c45;
   min-width: auto;
-  height: 32px;
-  line-height: 0;
   font-size: 0.875rem;
   padding: 6px 12px;
   border-radius: 5px;
@@ -68,15 +66,12 @@
   cursor: pointer;
   border: 1px solid #eaeaea;
   min-width: auto;
-  height: 32px;
-  line-height: 0;
   font-size: 0.875rem;
   padding: 6px 12px;
   border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
   color: #666;
+  text-align: center;
 }
 
 .longButton:hover {
@@ -85,7 +80,7 @@
 }
 
 .buttonText {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .description {

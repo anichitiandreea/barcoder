@@ -72,7 +72,7 @@ export default function SMSQRCode({data}) {
           <div>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
             <a className={styles.longButton} onClick={downloadFile}>
-              <span className={styles.buttonText} >Download</span>
+              <span className={styles.buttonText}>Download (.jpg)</span>
             </a>
           </div>
         </div>
