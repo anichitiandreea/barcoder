@@ -7,12 +7,18 @@ import Layout from '../../../components/layout'
 export default function PhoneNumberQRCode({data}) {
   const [processedData, setData] = useState('');
   const [image, setImage] = useState(data.fileContents);
+  const [successMessage, setSuccessMessage] = useState("")
 
   const generateCode = async() => {
     const response = await fetch('http://localhost:5000/PayloadQRCode/number?data=' + processedData);
     const data = await response.json()
 
     setImage(data.fileContents)
+    setSuccessMessage("Successfully generated!")
+
+    setTimeout(() => {
+      setSuccessMessage("")
+    }, 2000);
 
     return {
       props: {
@@ -64,6 +70,7 @@ export default function PhoneNumberQRCode({data}) {
             <button className={styles.button} onClick={generateCode}>
               <span className={styles.buttonText}>Generate</span>
             </button>
+            <div className={styles.success}>{successMessage}</div>
           </div>
           <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>

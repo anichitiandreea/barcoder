@@ -58,6 +58,12 @@
   border-color: #fc3074;
 }
 
+.success {
+  margin-top: 20px;
+  color: #23c552;
+  min-height: 21px;
+}
+
 .generation {
   flex-basis: 50%;;
 }
