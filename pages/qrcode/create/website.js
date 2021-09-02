@@ -61,11 +61,11 @@ export default function WebsiteQRCode({data}) {
               <input className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
             <div className={styles.sample}>(Example: https://your-sample-url)</div>
-            <a className={styles.button} onClick={generateCode}>
-              <span className={styles.buttonText}>Generate</span>
-            </a>
+              <button className={styles.button} onClick={generateCode}>
+                <span className={styles.buttonText}>Generate</span>
+              </button>
           </div>
-          <div>
+          <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
             <a className={styles.longButton} onClick={downloadFile}>
               <span className={styles.buttonText}>Download (.jpg)</span>

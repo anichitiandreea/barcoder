@@ -61,11 +61,11 @@ export default function PhoneNumberQRCode({data}) {
               <input id="phone-number" className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
             <div className={styles.sample}>(Example: 0744165568)</div>
-            <a className={styles.button} onClick={generateCode}>
+            <button className={styles.button} onClick={generateCode}>
               <span className={styles.buttonText}>Generate</span>
-            </a>
+            </button>
           </div>
-          <div>
+          <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
             <a className={styles.longButton} onClick={downloadFile}>
               <span className={styles.buttonText}>Download (.jpg)</span>

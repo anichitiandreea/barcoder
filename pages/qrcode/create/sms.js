@@ -65,11 +65,11 @@ export default function SMSQRCode({data}) {
             <div className={styles.description}>Pass SMS text here:</div>
             <textarea rows="4" cols="50" className={styles.textarea} value={smsText} onChange={(e) => setSmsText(e.target.value)} spellCheck="false">
             </textarea>
-            <a className={styles.button} onClick={generateCode}>
+            <button className={styles.button} onClick={generateCode}>
               <span className={styles.buttonText}>Generate</span>
-            </a>
+            </button>
           </div>
-          <div>
+          <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
             <a className={styles.longButton} onClick={downloadFile}>
               <span className={styles.buttonText}>Download (.jpg)</span>
