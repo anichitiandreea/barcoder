@@ -53,6 +53,16 @@ export default function QRCode() {
               </div>
             </a>
           </Link>
+          <Link href='/qrcode/create/email'>
+            <a className={styles.gridRow}>
+              <div className={styles.innerRow}>
+                <div className={styles.title}>
+                  Email QR Code
+                </div>
+                <div className={styles.description}>When scanned, sends email to a user</div>
+              </div>
+            </a>
+          </Link>
         </div>
       </main>
     </Layout>

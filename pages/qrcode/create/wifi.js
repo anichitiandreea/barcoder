@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import styles from '../../../styles/qrcode-create.module.css'
-import Image from 'next/image'
-import { useState } from 'react'
-import Layout from '../../../components/layout'
+import Head from 'next/head';
+import styles from '../../../styles/qrcode-create.module.css';
+import Image from 'next/image';
+import { useState } from 'react';
+import Layout from '../../../components/layout';
 
-export default function WebsiteQRCode({data}) {
+export default function WifiQRCode({data}) {
   const [image, setImage] = useState(data.fileContents);
   const [successMessage, setSuccessMessage] = useState("");
   const [checked, setChecked] = useState(false);
@@ -22,12 +22,12 @@ export default function WebsiteQRCode({data}) {
         'Content-Type': 'application/json'
       },
       method: 'POST'
-    })
+    });
 
-    const data = await response.json()
+    const data = await response.json();
 
-    setImage(data.fileContents)
-    setSuccessMessage("Successfully generated!")
+    setImage(data.fileContents);
+    setSuccessMessage("Successfully generated!");
 
     setTimeout(() => {
       setSuccessMessage("")
@@ -37,7 +37,7 @@ export default function WebsiteQRCode({data}) {
       props: {
         data
       }
-    }
+    };
   }
 
   const downloadFile = async () => {
@@ -124,13 +124,13 @@ export async function getStaticProps() {
       'Content-Type': 'application/json'
     },
     method: 'POST'
-  })
+  });
 
-  const data = await response.json()
+  const data = await response.json();
 
   return {
     props: {
       data
     }
-  }
+  };
 }

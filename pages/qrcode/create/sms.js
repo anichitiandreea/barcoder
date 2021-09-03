@@ -1,31 +1,31 @@
-import Head from 'next/head'
-import styles from '../../../styles/qrcode-create.module.css'
-import Image from 'next/image'
-import { useState } from 'react'
-import Layout from '../../../components/layout'
+import Head from 'next/head';
+import styles from '../../../styles/qrcode-create.module.css';
+import Image from 'next/image';
+import { useState } from 'react';
+import Layout from '../../../components/layout';
 
 export default function SMSQRCode({data}) {
-  const [processedData, setData] = useState('')
-  const [smsText, setSmsText] = useState("Sample text")
-  const [image, setImage] = useState(data.fileContents)
-  const [successMessage, setSuccessMessage] = useState("")
+  const [processedData, setData] = useState('');
+  const [smsText, setSmsText] = useState("Sample text");
+  const [image, setImage] = useState(data.fileContents);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const generateCode = async() => {
-    const response = await fetch(`http://localhost:5000/PayloadQRCode/sms?data=${processedData}&smsText=${smsText}`)
-    const data = await response.json()
+    const response = await fetch(`http://localhost:5000/PayloadQRCode/sms?data=${processedData}&smsText=${smsText}`);
+    const data = await response.json();
 
-    setImage(data.fileContents)
-    setSuccessMessage("Successfully generated!")
+    setImage(data.fileContents);
+    setSuccessMessage("Successfully generated!");
 
     setTimeout(() => {
-      setSuccessMessage("")
+      setSuccessMessage("");
     }, 2000);
 
     return {
       props: {
         data
       }
-    }
+    };
   }
 
   const downloadFile = async () => {
@@ -90,12 +90,12 @@ export default function SMSQRCode({data}) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/sms?data=""')
-  const data = await response.json()
+  const response = await fetch('http://localhost:5000/PayloadQRCode/sms?data=""');
+  const data = await response.json();
 
   return {
     props: {
       data
     }
-  }
+  };
 }

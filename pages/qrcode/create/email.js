@@ -4,13 +4,24 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
 
-export default function PhoneNumberQRCode({data}) {
-  const [processedData, setData] = useState('');
+export default function EmailQRCode({data}) {
   const [image, setImage] = useState(data.fileContents);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const generateCode = async() => {
-    const response = await fetch('http://localhost:5000/PayloadQRCode/number?data=' + processedData);
+  const generateCode = async event => {
+    event.preventDefault();
+    const response = await fetch('http://localhost:5000/PayloadQRCode/email', {
+      body: JSON.stringify({
+        user: event.target.email.value,
+        subject: event.target.subject.value,
+        message: event.target.message.value
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    });
+
     const data = await response.json();
 
     setImage(data.fileContents);
@@ -61,15 +72,18 @@ export default function PhoneNumberQRCode({data}) {
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.generation}>
-            <div className={styles.header1}>Generate Phone Number QR Code</div>
-            <div className={styles.description}>Pass phone number here:</div>
-            <div>
-              <input id="phone-number" className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
-            </div>
-            <div className={styles.sample}>(Example: 0744165568)</div>
-            <button className={styles.button} onClick={generateCode}>
-              <span className={styles.buttonText}>Generate</span>
-            </button>
+            <div className={styles.header1}>Generate Email QR Code</div>
+            <form onSubmit={generateCode}>
+              <label htmlFor="email" className={styles.label}>Email</label>
+              <input name="email" type="text" required className={styles.input} autoComplete="off"/>
+              <label htmlFor="subject" className={styles.label}>Subject</label>
+              <input name="subject" type="text" required className={styles.input} autoComplete="off"/>
+              <label className={styles.label}>Message</label>
+              <textarea rows="4" cols="50" className={styles.textarea} name="message" spellCheck="false" autoComplete="off"></textarea>
+              <button className={styles.button} type="submit">
+                <span className={styles.buttonText}>Generate</span>
+              </button>
+            </form>
             <div className={styles.success}>{successMessage}</div>
           </div>
           <div className={styles.imageContainer}>
@@ -86,7 +100,18 @@ export default function PhoneNumberQRCode({data}) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/number?data=""');
+  const response = await fetch('http://localhost:5000/PayloadQRCode/email', {
+    body: JSON.stringify({
+      user: "",
+      subject: "",
+      message: ""
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  });
+
   const data = await response.json();
 
   return {
