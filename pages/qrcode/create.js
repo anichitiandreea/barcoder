@@ -43,6 +43,16 @@ export default function QRCode() {
               </div>
             </a>
           </Link>
+          <Link href='/qrcode/create/wifi'>
+            <a className={styles.gridRow}>
+              <div className={styles.innerRow}>
+                <div className={styles.title}>
+                  Wi-Fi QR Code
+                </div>
+                <div className={styles.description}>When scanned, connects to a Wi-Fi network</div>
+              </div>
+            </a>
+          </Link>
         </div>
       </main>
     </Layout>
