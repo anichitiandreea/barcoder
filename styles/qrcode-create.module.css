@@ -135,15 +135,111 @@
   margin-right: 10px;
 }
 
-.checkbox {
+.checkboxWrapper {
   margin-bottom: 20px;
 }
 
 .encryption {
   margin-bottom: 20px;
   margin-top: 20px;
+  display: flex;
 }
 
+/*-----------CHECKBOX------------*/
+
+.checkbox {
+  cursor: pointer;
+  position: relative;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.checkbox:before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -6px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(117, 117, 117, 0.24);
+  opacity: 0;
+  -webkit-transition: opacity 0.2s ease;
+  -moz-transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
+}
+
+.checkbox svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #eaeaea;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.checkbox svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.checkbox svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+
+.checkbox:hover:before {
+  opacity: 1;
+}
+
+.checkbox:hover svg {
+  stroke: #fc3074;
+}
+
+.checkboxReal {
+  display: none;
+}
+
+.svg {
+  stroke: #fc3074 !important;
+}
+
+.path {
+  stroke-dashoffset: 60 !important;
+  transition: all 0.3s linear !important;
+}
+
+.polyline {
+  stroke-dashoffset: 42 !important;
+  transition: all 0.2s linear !important;
+  transition-delay: 0.15s !important;
+}
+
+.svgStyle {
+  color: #444;
+  font-size: .875em;
+  font-weight: 600;
+  vertical-align: middle;
+  display: inline-block;
+  height: 18px;
+}
+
+.labelRight {
+  color: #444;
+  font-size: .875em;
+  font-weight: 600;
+  margin-left: 10px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/*-----------CHECKBOX END------------*/
 @media only screen and (max-width: 800px) {
   .container {
     display: block;
