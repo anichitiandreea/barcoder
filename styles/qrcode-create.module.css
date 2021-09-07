@@ -6,6 +6,7 @@
   padding: 25px;
   background-color: #fff;
   border: 1px solid #eaeaea;
+  margin: 10px;
   font-family: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 
@@ -122,6 +123,10 @@
   margin-top: 20px;
   font-family: inherit;
   resize: none;
+}
+
+.textarea:focus {
+  border: 1px solid #000;
 }
 
 .imageContainer {
