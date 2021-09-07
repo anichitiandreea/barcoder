@@ -96,12 +96,21 @@ export default function WifiQRCode({data}) {
               <input id="password" name="password" type="text" required className={styles.input} autoComplete="off"/>
               <label className={styles.label}>Encryption</label>
               <div className={styles.encryption}>
-                <input type="radio" name="authenticationMode" value="2" autoComplete="off"/>
-                <label className={styles.label}>None</label>
-                <input type="radio" name="authenticationMode" value="1" autoComplete="off"/>
-                <label className={styles.label}>WPA/WPA2</label>
-                <input type="radio" name="authenticationMode" value="0" autoComplete="off"/>
-                <label className={styles.label}>WEP</label>
+                <label className={styles.radLabel}>
+                  <input type="radio" className={styles.radInput} name="authenticationMode" value="2" autoComplete="off"/>
+                  <div className={styles.radDesign}></div>
+                  <div className={styles.radText}>None</div>
+                </label>
+                <label className={styles.radLabel}>
+                  <input type="radio" className={styles.radInput} name="authenticationMode" value="1" autoComplete="off"/>
+                  <div className={styles.radDesign}></div>
+                  <div className={styles.radText}>WPA/WPA2</div>
+                </label>
+                <label className={styles.radLabel}>
+                  <input type="radio" className={styles.radInput} name="authenticationMode" value="0" autoComplete="off"/>
+                  <div className={styles.radDesign}></div>
+                  <div className={styles.radText}>WEP</div>
+                </label>
               </div>
               <button className={styles.button} type="submit">
                 <span className={styles.buttonText}>Generate</span>

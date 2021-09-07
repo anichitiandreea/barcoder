@@ -240,6 +240,60 @@
 }
 
 /*-----------CHECKBOX END------------*/
+
+/*----------RADIO BUTTON-----------*/
+
+.radLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.radInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+.radDesign {
+  width: 18px;
+  height: 18px;
+  border-radius: 100px;
+  background: linear-gradient(to right bottom, #fc3074, #971c45);
+  position: relative;
+}
+
+.radDesign::before {
+  content: '';
+  display: inline-block;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background: #eaeaea;
+  transform: scale(1.1);
+  transition: .3s;
+}
+
+.radInput:checked+.radDesign::before {
+  transform: scale(0);
+}
+
+.radText {
+  margin-left: 5px;
+  transition: .3s;
+  color: #444;
+  font-size: .875em;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+/*----------RADIO BUTTON END-----------*/
+
 @media only screen and (max-width: 800px) {
   .container {
     display: block;
