@@ -9,16 +9,30 @@ export default function SMSQRCode({data}) {
   const [smsText, setSmsText] = useState("Sample text");
   const [image, setImage] = useState(data.fileContents);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const generateCode = async() => {
-    const response = await fetch(`http://localhost:5000/PayloadQRCode/sms?data=${processedData}&smsText=${smsText}`);
-    const data = await response.json();
+    if (!processedData && !smsText) {
+      return;
+    }
 
-    setImage(data.fileContents);
-    setSuccessMessage("Successfully generated!");
+    const response = await fetch(`http://localhost:5000/PayloadQRCode/sms?phoneNumber=${processedData}&smsText=${smsText}`);
+    const errorCode = response.ok ? false : response.statusCode;
+
+    if (errorCode == false) {
+      data = await response.json();
+
+      setImage(data.fileContents);
+      setSuccessMessage("Successfully generated!");
+    }
+
+    if (errorCode == 500) {
+      setErrorMessage("Cannot retrieve data from server. Please try later.");
+    }
 
     setTimeout(() => {
       setSuccessMessage("");
+      setErrorMessage("");
     }, 2000);
 
     return {
@@ -63,18 +77,21 @@ export default function SMSQRCode({data}) {
         <div className={styles.container}>
           <div className={styles.generation}>
             <div className={styles.header1}>Generate SMS QR Code</div>
-            <div className={styles.description}>Pass phone number here:</div>
+            <div className={styles.description}>Phone Number:</div>
             <div>
               <input id="phone-number" className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
             <div className={styles.sample}>(Example: 0744165568)</div>
-            <div className={styles.description}>Pass SMS text here:</div>
+            <div className={styles.description}>Text:</div>
             <textarea rows="4" cols="50" className={styles.textarea} value={smsText} onChange={(e) => setSmsText(e.target.value)} spellCheck="false">
             </textarea>
             <button className={styles.button} onClick={generateCode}>
               <span className={styles.buttonText}>Generate</span>
             </button>
-            <div className={styles.success}>{successMessage}</div>
+            <div className={styles.message}>
+              <span className={styles.success}>{successMessage}</span>
+              <span className={styles.error}>{errorMessage}</span>
+            </div>
           </div>
           <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
@@ -90,7 +107,7 @@ export default function SMSQRCode({data}) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/sms?data=""');
+  const response = await fetch('http://localhost:5000/PayloadQRCode/sms?phoneNumber=""');
   const data = await response.json();
 
   return {

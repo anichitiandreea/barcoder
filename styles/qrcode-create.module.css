@@ -59,10 +59,17 @@
   border-color: #fc3074;
 }
 
-.success {
+.message {
   margin-top: 20px;
-  color: #23c552;
   min-height: 21px;
+}
+
+.success {
+  color: #23c552;
+}
+
+.error {
+  color: #f00;
 }
 
 .generation {

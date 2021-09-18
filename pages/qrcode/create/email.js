@@ -7,6 +7,7 @@ import Layout from '../../../components/layout';
 export default function EmailQRCode({data}) {
   const [image, setImage] = useState(data.fileContents);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const generateCode = async event => {
     event.preventDefault();
@@ -22,13 +23,22 @@ export default function EmailQRCode({data}) {
       method: 'POST'
     });
 
-    const data = await response.json();
+    const errorCode = response.ok ? false : response.statusCode;
 
-    setImage(data.fileContents);
-    setSuccessMessage("Successfully generated!");
+    if (errorCode == false) {
+      data = await response.json();
+
+      setImage(data.fileContents);
+      setSuccessMessage("Successfully generated!");
+    }
+
+    if (errorCode == 500) {
+      setErrorMessage("Cannot retrieve data from server. Please try later.");
+    }
 
     setTimeout(() => {
-      setSuccessMessage("")
+      setSuccessMessage("");
+      setErrorMessage("");
     }, 2000);
 
     return {
@@ -74,17 +84,20 @@ export default function EmailQRCode({data}) {
           <div className={styles.generation}>
             <div className={styles.header1}>Generate Email QR Code</div>
             <form onSubmit={generateCode}>
-              <label htmlFor="email" className={styles.label}>Email</label>
-              <input name="email" type="text" required className={styles.input} autoComplete="off"/>
-              <label htmlFor="subject" className={styles.label}>Subject</label>
-              <input name="subject" type="text" required className={styles.input} autoComplete="off"/>
-              <label className={styles.label}>Message</label>
+              <label htmlFor="email" className={styles.label}>Email:</label>
+              <input name="email" type="text" className={styles.input} autoComplete="off"/>
+              <label htmlFor="subject" className={styles.label}>Subject:</label>
+              <input name="subject" type="text" className={styles.input} autoComplete="off"/>
+              <label className={styles.label}>Message:</label>
               <textarea rows="4" cols="50" className={styles.textarea} name="message" spellCheck="false" autoComplete="off"></textarea>
               <button className={styles.button} type="submit">
                 <span className={styles.buttonText}>Generate</span>
               </button>
             </form>
-            <div className={styles.success}>{successMessage}</div>
+            <div className={styles.message}>
+              <span className={styles.success}>{successMessage}</span>
+              <span className={styles.error}>{errorMessage}</span>
+            </div>
           </div>
           <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>

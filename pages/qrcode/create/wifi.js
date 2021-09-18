@@ -8,6 +8,7 @@ export default function WifiQRCode({data}) {
   const [image, setImage] = useState(data.fileContents);
   const [successMessage, setSuccessMessage] = useState("");
   const [checked, setChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const generateCode = async event => {
     event.preventDefault();
@@ -24,13 +25,22 @@ export default function WifiQRCode({data}) {
       method: 'POST'
     });
 
-    const data = await response.json();
+    const errorCode = response.ok ? false : response.statusCode;
 
-    setImage(data.fileContents);
-    setSuccessMessage("Successfully generated!");
+    if (errorCode == false) {
+      data = await response.json();
+
+      setImage(data.fileContents);
+      setSuccessMessage("Successfully generated!");
+    }
+
+    if (errorCode == 500) {
+      setErrorMessage("Cannot retrieve data from server. Please try later.");
+    }
 
     setTimeout(() => {
-      setSuccessMessage("")
+      setSuccessMessage("");
+      setErrorMessage("");
     }, 2000);
 
     return {
@@ -76,8 +86,8 @@ export default function WifiQRCode({data}) {
           <div className={styles.generation}>
             <div className={styles.header1}>Generate Wi-Fi QR Code</div>
             <form onSubmit={generateCode}>
-              <label htmlFor="ssid" className={styles.label}>Network Name</label>
-              <input id="ssid" name="ssid" type="text" required className={styles.input} autoComplete="off"/>
+              <label htmlFor="ssid" className={styles.label}>Network Name:</label>
+              <input id="ssid" name="ssid" type="text" className={styles.input} autoComplete="off"/>
               <div className={styles.checkboxWrapper}>
                 <input type="checkbox" id="isHiddenSsid" name="isHiddenSsid" checked={checked}
                   onChange={(e) => setChecked(e.target.checked)} className={styles.checkboxReal}/>
@@ -92,9 +102,9 @@ export default function WifiQRCode({data}) {
                   <label htmlFor="isHiddenSsid" className={styles.labelRight}>Is Hidden</label>
                 </label>
               </div>
-              <label htmlFor="password" className={styles.label}>Password</label>
-              <input id="password" name="password" type="text" required className={styles.input} autoComplete="off"/>
-              <label className={styles.label}>Encryption</label>
+              <label htmlFor="password" className={styles.label}>Password:</label>
+              <input id="password" name="password" type="text" className={styles.input} autoComplete="off"/>
+              <label className={styles.label}>Encryption:</label>
               <div className={styles.encryption}>
                 <label className={styles.radLabel}>
                   <input type="radio" className={styles.radInput} name="authenticationMode" value="2" autoComplete="off"/>
@@ -116,7 +126,10 @@ export default function WifiQRCode({data}) {
                 <span className={styles.buttonText}>Generate</span>
               </button>
             </form>
-            <div className={styles.success}>{successMessage}</div>
+            <div className={styles.message}>
+              <span className={styles.success}>{successMessage}</span>
+              <span className={styles.error}>{errorMessage}</span>
+            </div>
           </div>
           <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>

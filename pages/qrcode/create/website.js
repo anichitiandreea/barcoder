@@ -8,16 +8,30 @@ export default function WebsiteQRCode({data}) {
   const [processedData, setData] = useState('');
   const [image, setImage] = useState(data.fileContents);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const generateCode = async() => {
-    const response = await fetch('http://localhost:5000/PayloadQRCode/website?data=' + processedData);
-    const data = await response.json();
+    if (!processedData) {
+      return;
+    }
 
-    setImage(data.fileContents);
-    setSuccessMessage("Successfully generated!");
+    const response = await fetch('http://localhost:5000/PayloadQRCode/website?websiteUrl=' + processedData);
+    const errorCode = response.ok ? false : response.statusCode;
+
+    if (errorCode == false) {
+      data = await response.json();
+
+      setImage(data.fileContents);
+      setSuccessMessage("Successfully generated!");
+    }
+
+    if (errorCode == 500) {
+      setErrorMessage("Cannot retrieve data from server. Please try later.");
+    }
 
     setTimeout(() => {
       setSuccessMessage("");
+      setErrorMessage("");
     }, 2000);
 
     return {
@@ -62,7 +76,7 @@ export default function WebsiteQRCode({data}) {
         <div className={styles.container}>
           <div className={styles.generation}>
             <div className={styles.header1}>Generate Website QR Code</div>
-            <div className={styles.description}>Pass website URL here:</div>
+            <div className={styles.description}>Website URL:</div>
             <div>
               <input className={styles.input} type="text" value={processedData} onChange={(e) => setData(e.target.value)}/>
             </div>
@@ -70,7 +84,10 @@ export default function WebsiteQRCode({data}) {
             <button className={styles.button} onClick={generateCode}>
               <span className={styles.buttonText}>Generate</span>
             </button>
-            <div className={styles.success}>{successMessage}</div>
+            <div className={styles.message}>
+              <span className={styles.success}>{successMessage}</span>
+              <span className={styles.error}>{errorMessage}</span>
+            </div>
           </div>
           <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
@@ -86,7 +103,7 @@ export default function WebsiteQRCode({data}) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/website?data=""');
+  const response = await fetch('http://localhost:5000/PayloadQRCode/website?websiteUrl=""');
   const data = await response.json();
 
   return {
