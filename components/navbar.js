@@ -101,10 +101,10 @@ export default function Navbar() {
           -416 -4 -410 -9z"/>
           </g>
         </svg>
-        <div>
+        {/* <div>
           <a className={styles.link}>Login</a>
           <a className={styles.link}>Sign up</a>
-        </div>
+        </div> */}
       </div>
       <div className={styles.submenu}>
         <ActiveLink activeClassName={styles.active} href="/qrcode/create">

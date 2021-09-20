@@ -3,6 +3,7 @@ import styles from '../../../styles/qrcode-create.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
+import Download from '../../../components/Download';
 
 export default function WifiQRCode({data}) {
   const [image, setImage] = useState(data.fileContents);
@@ -49,30 +50,6 @@ export default function WifiQRCode({data}) {
       }
     };
   }
-
-  const downloadFile = async () => {
-    let binaryString = window.atob(image);
-    let length = binaryString.length;
-    let bytes = new Uint8Array(length);
-
-    for (var i = 0; i < length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-
-    const url = window.URL.createObjectURL(
-      new Blob([bytes.buffer, {type: 'image/png'}]),
-    );
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute(
-      'download',
-      `image.png`,
-    );
-
-    // Start download
-    link.click();
-  };
 
   return (
     <Layout>
@@ -133,9 +110,7 @@ export default function WifiQRCode({data}) {
           </div>
           <div className={styles.imageContainer}>
             <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
-            <a className={styles.longButton} onClick={downloadFile}>
-              <span className={styles.buttonText}>Download (.jpg)</span>
-            </a>
+            <Download image={image} />
           </div>
         </div>
       </main>

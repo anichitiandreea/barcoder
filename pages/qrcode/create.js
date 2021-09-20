@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import styles from '../../styles/qrcode.module.css'
-import Layout from '../../components/layout'
-import Link from 'next/link'
+import Head from 'next/head';
+import styles from '../../styles/qrcode.module.css';
+import Layout from '../../components/layout';
+import Link from 'next/link';
 
 export default function QRCode() {
   return (
