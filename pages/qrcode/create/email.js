@@ -4,15 +4,16 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
 import Download from '../../../components/Download';
+import https from 'https';
 
-export default function EmailQRCode({data}) {
-  const [image, setImage] = useState(data.fileContents);
+export default function EmailQRCode({ data }) {
+  const [image, setImage] = useState(data);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const generateCode = async event => {
     event.preventDefault();
-    const response = await fetch('http://localhost:5000/PayloadQRCode/email', {
+    const response = await fetch('https://localhost:5001/api/qr-codes/email', {
       body: JSON.stringify({
         user: event.target.email.value,
         subject: event.target.subject.value,
@@ -21,15 +22,18 @@ export default function EmailQRCode({data}) {
       headers: {
         'Content-Type': 'application/json'
       },
-      method: 'POST'
+      method: 'POST',
+      agent: new https.Agent({
+        rejectUnauthorized: false,
+      })
     });
 
     const errorCode = response.ok ? false : response.statusCode;
 
     if (errorCode == false) {
-      data = await response.json();
+      data = Buffer.from(await response.arrayBuffer()).toString('base64');
 
-      setImage(data.fileContents);
+      setImage(data);
       setSuccessMessage("Successfully generated!");
     }
 
@@ -88,7 +92,7 @@ export default function EmailQRCode({data}) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/email', {
+  const response = await fetch('https://localhost:5001/api/qr-codes/email', {
     body: JSON.stringify({
       user: "",
       subject: "",
@@ -97,10 +101,13 @@ export async function getStaticProps() {
     headers: {
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    agent: new https.Agent({
+      rejectUnauthorized: false,
+    })
   });
 
-  const data = await response.json();
+  const data = Buffer.from(await response.arrayBuffer()).toString('base64');
 
   return {
     props: {

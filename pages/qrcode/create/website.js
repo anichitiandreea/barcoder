@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
 import Download from '../../../components/Download';
+import https from 'https';
 
-export default function WebsiteQRCode({data}) {
+export default function WebsiteQRCode({ data }) {
   const [processedData, setData] = useState('');
-  const [image, setImage] = useState(data.fileContents);
+  const [image, setImage] = useState(data);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -16,13 +17,17 @@ export default function WebsiteQRCode({data}) {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/PayloadQRCode/website?websiteUrl=' + processedData);
+    const response = await fetch('https://localhost:5001/api/qr-codes/website?websiteUrl=' + processedData, {
+      agent: new https.Agent({
+        rejectUnauthorized: false,
+      })
+    });
     const errorCode = response.ok ? false : response.statusCode;
 
     if (errorCode == false) {
-      data = await response.json();
+      const generatedImage = Buffer.from(await response.arrayBuffer()).toString('base64');
 
-      setImage(data.fileContents);
+      setImage(generatedImage);
       setSuccessMessage("Successfully generated!");
     }
 
@@ -36,9 +41,7 @@ export default function WebsiteQRCode({data}) {
     }, 2000);
 
     return {
-      props: {
-        data
-      }
+      props: { data }
     };
   }
 
@@ -76,14 +79,16 @@ export default function WebsiteQRCode({data}) {
   )
 }
 
-// This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/website?websiteUrl=""');
-  const data = await response.json();
+  const response = await fetch('https://localhost:5001/api/qr-codes/website?websiteUrl=""', {
+    agent: new https.Agent({
+      rejectUnauthorized: false,
+    })
+  });
+
+  const data = Buffer.from(await response.arrayBuffer()).toString('base64');
 
   return {
-    props: {
-      data
-    }
+    props: { data }
   };
 }

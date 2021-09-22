@@ -4,16 +4,17 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
 import Download from '../../../components/Download';
+import https from 'https';
 
-export default function WifiQRCode({data}) {
-  const [image, setImage] = useState(data.fileContents);
+export default function WifiQRCode({ data }) {
+  const [image, setImage] = useState(data);
   const [successMessage, setSuccessMessage] = useState("");
   const [checked, setChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const generateCode = async event => {
     event.preventDefault();
-    const response = await fetch('http://localhost:5000/PayloadQRCode/wifi', {
+    const response = await fetch('https://localhost:5001/api/qr-codes/wi-fi', {
       body: JSON.stringify({
         ssid: event.target.ssid.value,
         password: event.target.password.value,
@@ -23,15 +24,18 @@ export default function WifiQRCode({data}) {
       headers: {
         'Content-Type': 'application/json'
       },
-      method: 'POST'
+      method: 'POST',
+      agent: new https.Agent({
+        rejectUnauthorized: false,
+      })
     });
 
     const errorCode = response.ok ? false : response.statusCode;
 
     if (errorCode == false) {
-      data = await response.json();
+     data = Buffer.from(await response.arrayBuffer()).toString('base64');
 
-      setImage(data.fileContents);
+      setImage(data);
       setSuccessMessage("Successfully generated!");
     }
 
@@ -45,9 +49,7 @@ export default function WifiQRCode({data}) {
     }, 2000);
 
     return {
-      props: {
-        data
-      }
+      props: { data }
     };
   }
 
@@ -120,7 +122,7 @@ export default function WifiQRCode({data}) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:5000/PayloadQRCode/wifi', {
+  const response = await fetch('https://localhost:5001/api/qr-codes/wi-fi', {
     body: JSON.stringify({
       ssid: "",
       password: "",
@@ -130,14 +132,15 @@ export async function getStaticProps() {
     headers: {
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    agent: new https.Agent({
+      rejectUnauthorized: false,
+    })
   });
 
-  const data = await response.json();
+  const data = Buffer.from(await response.arrayBuffer()).toString('base64');
 
   return {
-    props: {
-      data
-    }
+    props: { data }
   };
 }
