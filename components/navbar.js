@@ -1,5 +1,5 @@
-import styles from '../styles/navbar.module.css'
-import ActiveLink from './link'
+import styles from '../styles/navbar.module.css';
+import ActiveLink from './link';
 
 export default function Navbar() {
   return (
@@ -110,9 +110,9 @@ export default function Navbar() {
         <ActiveLink activeClassName={styles.active} href="/qrcode/create">
           <a className={styles.link}>QR Code</a>
         </ActiveLink>
-        <ActiveLink activeClassName={styles.active} href="/barcode">
+        {/* <ActiveLink activeClassName={styles.active} href="/barcode">
           <a className={styles.link}>Barcode</a>
-        </ActiveLink>
+        </ActiveLink> */}
       </div>
     </div>
   )

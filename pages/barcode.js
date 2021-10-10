@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/qrcode.module.css'
-import Layout from '../components/layout'
+import Head from 'next/head';
+import styles from '../styles/qrcode.module.css';
+import Layout from '../components/layout';
 
 export default function Barcode() {
   return (
