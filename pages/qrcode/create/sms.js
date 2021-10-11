@@ -3,7 +3,7 @@ import styles from '../../../styles/qrcode-create.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
-import Download from '../../../components/Download';
+import Download from '../../../components/download';
 import https from 'https';
 
 export default function SMSQRCode({ data }) {
@@ -18,11 +18,12 @@ export default function SMSQRCode({ data }) {
       return;
     }
 
-    const response = await fetch(`https://localhost:5001/api/qr-codes/sms?phoneNumber=${processedData}&smsText=${smsText}`, {
+    const response = await fetch(`${process.env.apiUrl}/qr-codes/sms?phoneNumber=${processedData}&smsText=${smsText}`, {
       agent: new https.Agent({
         rejectUnauthorized: false,
       })
     });
+
     const errorCode = response.ok ? false : response.statusCode;
 
     if (errorCode == false) {
@@ -85,7 +86,7 @@ export default function SMSQRCode({ data }) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('https://localhost:5001/api/qr-codes/sms?phoneNumber=""', {
+  const response = await fetch(`${process.env.apiUrl}/qr-codes/sms?phoneNumber=""`, {
     agent: new https.Agent({
       rejectUnauthorized: false,
     })

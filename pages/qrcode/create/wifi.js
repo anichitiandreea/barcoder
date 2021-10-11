@@ -3,7 +3,7 @@ import styles from '../../../styles/qrcode-create.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
-import Download from '../../../components/Download';
+import Download from '../../../components/download';
 import https from 'https';
 
 export default function WifiQRCode({ data }) {
@@ -14,7 +14,7 @@ export default function WifiQRCode({ data }) {
 
   const generateCode = async event => {
     event.preventDefault();
-    const response = await fetch('https://localhost:5001/api/qr-codes/wi-fi', {
+    const response = await fetch(`${process.env.apiUrl}/qr-codes/wi-fi`, {
       body: JSON.stringify({
         ssid: event.target.ssid.value,
         password: event.target.password.value,
@@ -122,7 +122,7 @@ export default function WifiQRCode({ data }) {
 
 // This function gets called at build time
 export async function getStaticProps() {
-  const response = await fetch('https://localhost:5001/api/qr-codes/wi-fi', {
+  const response = await fetch(`${process.env.apiUrl}/qr-codes/wi-fi`, {
     body: JSON.stringify({
       ssid: "",
       password: "",

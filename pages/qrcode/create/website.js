@@ -3,7 +3,7 @@ import styles from '../../../styles/qrcode-create.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
 import Layout from '../../../components/layout';
-import Download from '../../../components/Download';
+import Download from '../../../components/download';
 import https from 'https';
 
 export default function WebsiteQRCode({ data }) {
@@ -17,7 +17,7 @@ export default function WebsiteQRCode({ data }) {
       return;
     }
 
-    const response = await fetch('https://localhost:5001/api/qr-codes/website?websiteUrl=' + processedData, {
+    const response = await fetch(`${process.env.apiUrl}/qr-codes/website?websiteUrl=${processedData}`, {
       agent: new https.Agent({
         rejectUnauthorized: false,
       })
@@ -80,7 +80,7 @@ export default function WebsiteQRCode({ data }) {
 }
 
 export async function getStaticProps() {
-  const response = await fetch('https://localhost:5001/api/qr-codes/website?websiteUrl=""', {
+  const response = await fetch(`${process.env.apiUrl}/qr-codes/website?websiteUrl=""`, {
     agent: new https.Agent({
       rejectUnauthorized: false,
     })

@@ -4,7 +4,7 @@ import Layout from '../components/layout';
 import React, { useEffect, useState } from "react";
 import Router from 'next/router';
 
-function Home() {
+export default function Home() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -33,5 +33,3 @@ function Home() {
     </Layout>
   )
 }
-
-export default Home
