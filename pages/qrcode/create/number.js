@@ -71,7 +71,7 @@ export default function PhoneNumberQRCode({ data }) {
             </div>
           </div>
           <div className={styles.imageContainer}>
-            <Image src={"data:image/png;base64," + image} alt="image" width='310px' height="310px"></Image>
+            <Image src={"data:image/png;base64," + image} alt="image" width='310' height="310"></Image>
             <Download image={image} />
           </div>
         </div>
