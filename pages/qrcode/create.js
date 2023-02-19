@@ -13,58 +13,58 @@ export default function QRCode() {
       </Head>
       <main className={styles.container}>
         <div className={styles.gridTable}>
-          <Link href='/qrcode/create/website'>
-            <a className={styles.gridRow}>
-              <div className={styles.innerRow}>
-                <div className={styles.title}>
-                  Website URL QR Code
-                </div>
-                <div className={styles.description}>When scanned, redirects user to a website</div>
+          <Link href='/qrcode/create/website' className={styles.gridRow}>
+
+            <div className={styles.innerRow}>
+              <div className={styles.title}>
+                Website URL QR Code
               </div>
-            </a>
+              <div className={styles.description}>When scanned, redirects user to a website</div>
+            </div>
+
           </Link>
-          <Link href='/qrcode/create/number'>
-            <a className={styles.gridRow}>
-              <div className={styles.innerRow}>
-                <div className={styles.title}>
-                  Phone Number QR Code
-                </div>
-                <div className={styles.description}>When scanned, displays the option to call to that number</div>
+          <Link href='/qrcode/create/number' className={styles.gridRow}>
+
+            <div className={styles.innerRow}>
+              <div className={styles.title}>
+                Phone Number QR Code
               </div>
-            </a>
+              <div className={styles.description}>When scanned, displays the option to call to that number</div>
+            </div>
+
           </Link>
-          <Link href='/qrcode/create/sms'>
-            <a className={styles.gridRow}>
-              <div className={styles.innerRow}>
-                <div className={styles.title}>
-                  SMS QR Code
-                </div>
-                <div className={styles.description}>When scanned, displays the message to send to a user</div>
+          <Link href='/qrcode/create/sms' className={styles.gridRow}>
+
+            <div className={styles.innerRow}>
+              <div className={styles.title}>
+                SMS QR Code
               </div>
-            </a>
+              <div className={styles.description}>When scanned, displays the message to send to a user</div>
+            </div>
+
           </Link>
-          <Link href='/qrcode/create/wifi'>
-            <a className={styles.gridRow}>
-              <div className={styles.innerRow}>
-                <div className={styles.title}>
-                  Wi-Fi QR Code
-                </div>
-                <div className={styles.description}>When scanned, connects to a Wi-Fi network</div>
+          <Link href='/qrcode/create/wifi' className={styles.gridRow}>
+
+            <div className={styles.innerRow}>
+              <div className={styles.title}>
+                Wi-Fi QR Code
               </div>
-            </a>
+              <div className={styles.description}>When scanned, connects to a Wi-Fi network</div>
+            </div>
+
           </Link>
-          <Link href='/qrcode/create/email'>
-            <a className={styles.gridRow}>
-              <div className={styles.innerRow}>
-                <div className={styles.title}>
-                  Email QR Code
-                </div>
-                <div className={styles.description}>When scanned, sends email to a user</div>
+          <Link href='/qrcode/create/email' className={styles.gridRow}>
+
+            <div className={styles.innerRow}>
+              <div className={styles.title}>
+                Email QR Code
               </div>
-            </a>
+              <div className={styles.description}>When scanned, sends email to a user</div>
+            </div>
+
           </Link>
         </div>
       </main>
     </Layout>
-  )
+  );
 }
